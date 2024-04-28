@@ -1,4 +1,3 @@
-
 import * as Plot from '@observablehq/plot';
 import { groupSort } from 'd3-array';
 
