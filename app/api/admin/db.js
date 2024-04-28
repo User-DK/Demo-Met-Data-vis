@@ -1,6 +1,7 @@
 const sql = require('mysql');
 const util = require('util');
-process = require("process");
+const process = require("process");
+require('dotenv').config();
 
 const password = process.env.DB_Password;
 
@@ -71,7 +72,7 @@ async function getRainfallData(state, district, year) {
   const annualMean = rawAnnualMean.map(row => row.avg);
   const monthlyAverages = await getMonthlyAverages(state, district);
   
-  return { annualTotal, annualMean, monthlyAverages };
+  return { state, district, year, annualTotal, annualMean, monthlyAverages };
 }
 
 // async function fetchData(){

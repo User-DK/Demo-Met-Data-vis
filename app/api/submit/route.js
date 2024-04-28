@@ -12,7 +12,10 @@ export async function GET(req) {
 
 export async function POST(req, res) {
   try {
-    const { state, district, year } = req.body;
+    const formData = await req.formData(); 
+    const state = formData.get('state');
+    const district = formData.get('district');
+    const year = formData.get('year');
     const data = await getRainfallData(state, district, year);
     return NextResponse.json(data, {
       status: 200,

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import * as d3 from 'd3';
+import visualize from './methods/visualiz'
 
 function HomePage() {
   const [selectedState, setSelectedState] = useState('');
@@ -36,6 +36,7 @@ function HomePage() {
     });
 
     const data = await response.json();
+    console.log(data);
     visualize(data);
   }
 
@@ -43,29 +44,6 @@ function HomePage() {
     setSelectedState(event.target.value);
     setDistricts(allDistricts[event.target.value] || []);
   };
-
-  function visualize(data) {
-  const svgWidth = 400;
-  const svgHeight = 200;
-  const barPadding = 5;
-
-  const svg = d3.select('#visualization')
-                .append('svg')
-                .attr('width', svgWidth)
-                .attr('height', svgHeight);
-
-  const barWidth = (svgWidth / data.length);
-
-  const barChart = svg.selectAll('rect')
-                      .data(data)
-                      .enter()
-                      .append('rect')
-                      .attr('x', (d, i) => i * barWidth)
-                      .attr('y', (d) => svgHeight - d) 
-                      .attr('height', (d) => d) 
-                      .attr('width', barWidth - barPadding)
-                      .attr('fill', 'steelblue'); 
-}
 
   return (
     <div>
