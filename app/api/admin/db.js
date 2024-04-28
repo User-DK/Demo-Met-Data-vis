@@ -1,10 +1,13 @@
 const sql = require('mysql');
 const util = require('util');
+process = require("process");
+
+const password = process.env.DB_Password;
 
 const connection = sql.createConnection({
   host: "localhost",
   user: "root",
-  password: "Bye01@world",
+  password: password,
   database: "met"
 });
 

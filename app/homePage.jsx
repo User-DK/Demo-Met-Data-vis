@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import * as d3 from 'd3';
 
 function HomePage() {
   const [selectedState, setSelectedState] = useState('');
@@ -43,15 +44,31 @@ function HomePage() {
     setDistricts(allDistricts[event.target.value] || []);
   };
 
-  function visualize(data){
-  const {annualTotal, annualMean, monthlyAverages} = data;
-  console.log("hello");
-  return(
-    <h1>hello kaise hoo</h1>
-  );
-  }
+  function visualize(data) {
+  const svgWidth = 400;
+  const svgHeight = 200;
+  const barPadding = 5;
+
+  const svg = d3.select('#visualization')
+                .append('svg')
+                .attr('width', svgWidth)
+                .attr('height', svgHeight);
+
+  const barWidth = (svgWidth / data.length);
+
+  const barChart = svg.selectAll('rect')
+                      .data(data)
+                      .enter()
+                      .append('rect')
+                      .attr('x', (d, i) => i * barWidth)
+                      .attr('y', (d) => svgHeight - d) 
+                      .attr('height', (d) => d) 
+                      .attr('width', barWidth - barPadding)
+                      .attr('fill', 'steelblue'); 
+}
 
   return (
+    <div>
     <form onSubmit={onSubmit}>
       <select id="state" name="state" required onChange={handleStateChange} defaultValue="">
         <option value="" disabled>--Select State--</option>
@@ -70,6 +87,8 @@ function HomePage() {
     <br/>
       <button type="submit">Submit</button>
     </form>
+    <div id="visualization"></div>
+    </div>
   );
 }
 
